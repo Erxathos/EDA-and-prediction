@@ -1,9 +1,16 @@
 # Explanatory Data Analysis and rented bikes prediction using Long-Short Term Memory.
 
 
-The goal of this work is to make an EDA of a dataset [1]. This dataset contains daily and hourly data and located in `Dataset` folder. In this work `hour.csv` was used. 
+The goal of this work is to make an EDA of a dataset [1]. This dataset contains daily and hourly data and located in `Dataset` folder. 
 
-Some related pictures:
+## Notebooks
+The EDA of `hour.csv` is in `data_analysis.ipynb`. 
+
+A notebook `lstm.ipynb` contains methods to work with LSTM neural networks
+
+`tests.ipynb` consist of related tests
+
+## EDA preview
 
 Here we can see that the data has a trend and seasonality
 
@@ -13,17 +20,17 @@ The graph below shows us that on non-working days the number of casual (not regi
 
 <center><img src="img/casual_registered.png"></center>
 
-
 Please, see `data_analysis.ipynb` to get more information about the data.
 
-## Prediction
-Training, evaluation and model loading are in `lstm.ipynb`.
+## Prediction results
 
-The current result is depicted on the picture.
+The current prediction result is depicted on the picture.
 
 <center><img src="img/prediction.png"></center>
 
-The obtained mean absolute error is 28.08
+The obtained mean absolute error is 28.08 bikes for a month of hourly data
+
+Please, see `lstm.ipynb` to get the ideas how to improve the result
 
 ## Requirements
 The libraries were used:
