@@ -2,10 +2,19 @@ import pandas as pd
 def df_to_supervised(source_data, column_to_predict="cnt", lag=1, dropnan=True, reshape=True):
     """
     Returns a dataframe as a supervised learning framed dataset.
-    Arguments:
+    
+    Parameters
+    ----------
         source_data: Observations as a DataFrame
-        lag: Number of lag observations as input (X).
-        dropnan: If true, drop rows with NaN values.
+        lag: Number of lag observations as input (X)
+        dropnan: If true, drop rows with NaN values
+        reshape: bool
+            If true, Keras-LSTM-shaped
+            Non-reshaped can be used for pca/tsne data visualisation
+    
+    Returns
+    -------
+        Sequences of data and a lagged output
     """
     from pandas import concat
     # Empty dataframe to store the result
@@ -40,17 +49,19 @@ def df_to_supervised(source_data, column_to_predict="cnt", lag=1, dropnan=True, 
     # fit the size of x to the size of y
     x = x.iloc[0:len(y)]
     
-    # Keras-LSTM-shaped
-    # Non-reshaped can be used for pca/tsne data visualisation
+    
     if (reshape):
-        x = x.values.reshape(x.shape[0], (lag), x.shape[1]//(lag))
+        x = x.values.reshape(x.shape[0], lag, x.shape[1]//(lag))
     return x, y
 
 def load_data(lag=3*24, test_split=1/24):
     """
     Split the data into test and training datasets.
-    Arguments:
-        lag: lag variable to split the data
+    
+    Parameters
+    ----------
+        lag : lag variable to split the data
+        test_split : train and test split ratio
     """
     from sklearn.model_selection import train_test_split
 
@@ -58,7 +69,7 @@ def load_data(lag=3*24, test_split=1/24):
     df = pd.read_csv(fname, encoding='utf-8-sig')
     df.drop(["dteday", "instant"], axis=1,inplace=True)
     
-    # Use the data of 3 previous days to predict the "cnt" of next hour
+    # Use the data of 3 previous days (lag=3*24) to predict the "cnt" of next hour
     x, y = df_to_supervised(df,lag=lag)
     # Roughly one month
 
